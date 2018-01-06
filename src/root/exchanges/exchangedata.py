@@ -1,22 +1,16 @@
 '''
-Created on Jan 3, 2018
+Created on Jan 6, 2018
 
 @author: kevinmendoza
 '''
 
-class DatabaseWrapper():
-    '''
-        creates a new database or connects to an existing one
-    '''
 
-    def __init__(self, **kwargs):
-        '''
-            ? constructor
-        '''
-        
-    def save_data(self,index_id=0,data={},**kwargs):
-        pass #??
+class Data():
     
+    
+    def __init__(self,name=None,**kwargs):
+        self.name = name
+        
     '''
         returns a timeseries based on stored data and time parameters
         @param period
@@ -41,4 +35,14 @@ class DatabaseWrapper():
     def get_timeseries(self,period="00:01:00:00",divisions="00:00:00:00"):
         return None
     
-    
+    def update(self):
+        pass
+        
+        
+class NullData(Data):
+    '''
+        a testing class used to test exchange indices
+    '''
+    def __init__(self,**kwargs):
+        super().__init(name="Null Data",**kwargs)
+        
