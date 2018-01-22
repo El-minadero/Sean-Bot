@@ -3,8 +3,12 @@ Created on Jan 3, 2018
 
 @author: kevinmendoza
 '''
-from root.exchanges.index import make_index_dict
 
+def fill_exchanges():
+    exchange_dict = {}
+    exchange_dict["Binance"]=Binance() 
+    return exchange_dict
+    
 class Exchange():
     '''
         A class to fetch data from exchanges and automatically calculate
@@ -14,34 +18,39 @@ class Exchange():
         @param notices
             a dict of Notice() objects
     '''
-    def __init__(self,data=None,notices={},**kwargs):
-        self._notices   = notices
-        self._data      = data
-        self.indices    = make_index_dict(data=data)
-    
-    '''
-        updates the data and indices in the exchange
-    '''
+    def __init_(self):
+        self.name = "dummy exchange"
+        self.path = ""
+        
     def update(self):
-        self._data.update()
-        self._update_indexes()
-        
-    '''
-        return notices flagged by the notice conditions
-    '''
-    def get_notices(self):
-        self._update_notices()
-        notices = {}
-        for notice in self._notices:
-            if notice.notify():
-                notices[notice.name] = notice.get_notice()
-        return notices
+        print("Updating " + self.name)
+        pass
     
-    def _update_notices(self):
-        for notice in self._notices:
-            notice.update_notice(self.indices)
+    def set_base_path(self,path):
+        self.path = path + self.extension
+        print("Setting \'" + self.name + "\' path to \'" + self.path + "\'")
+    
+    def save_and_close(self):
+        print("Saving " + self.name + " to file")
         
-    def _update_indexes(self):
-        for index in self._indices:
-            index.update()
+    def connect(self):
+        print("connecting " + self.name + " data")
 
+class Binance(Exchange):
+    def __init__(self):
+        self.name       = '## binance exchange ##'
+        self.extension  = "\binance"
+        self.path       = ""
+    
+    def update(self):
+        super().update()
+    
+    def save_and_close(self):
+        print("saving" + str(self.name) + "data to file")
+    
+    def set_base_path(self,path):
+        super().set_base_path(self.extension,path)
+        return self
+    
+    def connect(self):
+        super().connect()
